@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head></head>
+  <body>
+    <div id="user">
+      {% if current_user %}
+        Hi {{ current_user.username }}
+	<a href="/auth/logout?next={{ url_escape(request.uri) }}">{{ _("Sign out") }}</a>
+      {% else %}
+        {% raw _('<a href="{}">Sign in</a>'.format('/auth/login?next=' + url_escape(request.uri))) %} or 
+        {% raw _('<a href="{}">Create account</a>'.format('/auth/create?next=' + url_escape(request.uri))) %}
+      {% end %}
+    </div>
+    <div id="content">{% block body %}{% end %}</div>
+  </body>
+</html>

@@ -1,0 +1,18 @@
+language: python
+python:
+  - "3.5"
+cache:
+  directories:
+    - $HOME/.cache/pip
+addons:
+  postgresql: "9.5"
+
+before_install:
+  - pip install flake8 coverage
+
+before_script:
+  - python3 -m flake8 .
+  - psql -c 'create database demo;' -U postgres
+
+script:
+  - ./tests/test_with_coverage.sh

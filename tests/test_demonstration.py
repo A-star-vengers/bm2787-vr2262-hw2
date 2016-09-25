@@ -1,7 +1,5 @@
 from passlib.hash import bcrypt_sha256
 
-from tornado.escape import json_encode
-from tornado.gen import Task
 from tornado.testing import gen_test
 
 from tests.util import HTTPTest, setUpModule, tearDownModule

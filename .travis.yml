@@ -5,7 +5,7 @@ cache:
   directories:
     - $HOME/.cache/pip
 addons:
-  postgresql: "9.5"
+  postgresql: "9.4"
 
 before_install:
   - pip install flake8 coverage

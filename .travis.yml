@@ -15,4 +15,4 @@ before_script:
   - psql -c 'create database demo;' -U postgres
 
 script:
-  - ./tests/test_with_coverage.sh
+  - ./tests/tests_with_coverage.sh

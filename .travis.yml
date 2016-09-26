@@ -13,6 +13,7 @@ before_install:
 before_script:
   - python3 -m flake8 .
   - psql -c 'create database demo;' -U postgres
+  - head -c 24 /dev/urandom > COOKIE_SECRET
 
 script:
   - ./tests/tests_with_coverage.sh

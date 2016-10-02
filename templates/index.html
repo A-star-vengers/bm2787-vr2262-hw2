@@ -2,7 +2,8 @@
 
 {% block body %}
   {% if current_user %}
-    You have logged in
+    You have logged in<br>
+    <a href="/clue/create">Create Clue</a></br>
   {% else %}
     You have not logged in
   {% end %}

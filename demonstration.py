@@ -20,6 +20,7 @@ if __name__ == '__main__':
 from demo import models  # noqa
 
 User = models.User
+Clue = models.Clue
 
 path = partial(os.path.join, os.path.dirname(__file__))
 path.__doc__ = 'Get the full path relative to the directory of this file.'
@@ -122,6 +123,22 @@ class LogoutHandler(BaseHandler):
         self.redirect(self.get_argument('next', '/'))
 
 
+class CreateClueHandler(BaseHandler):
+    """Clue creation handler."""
+
+    def get(self):
+        """Render /clue/create/."""
+        self.render('create_clue.html', error=None)
+
+    def post(self):
+        """Method for creating a clue."""
+        clue = self.get_argument('clue')
+        answer = self.get_argument('answer').upper()
+        with self.session.begin():
+            self.session.add(Clue(clue=clue, answer=answer))
+        self.render('create_clue.html', error='Clue created')
+
+
 class Application(tornado.web.Application):
     """The demo application."""
 
@@ -138,6 +155,7 @@ class Application(tornado.web.Application):
             (r'/auth/create', CreateUserHandler),
             (r'/auth/login', LoginHandler),
             (r'/auth/logout', LogoutHandler),
+            (r'/clue/create', CreateClueHandler),
         ]
         settings = {
             'template_path': path('templates'),

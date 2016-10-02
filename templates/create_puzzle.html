@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<h1>Create Puzzle</h1>
+{% if error %}
+<span style="color: red">Error: {{ error }}</span><p>
+{% end %}
+
+<form action="/puzzle/create" method="POST">
+  Name: <input name="name" type="text"><br>
+  # Rows: <input name="nrows" type="text"><br>
+  # Columns: <input name="ncols" type="text"><br>
+  {% module xsrf_form_html() %}
+  <input type="submit">
+</form>
+{% end %}

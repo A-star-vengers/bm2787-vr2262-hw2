@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<h1>Edit Puzzle</h1>
+{% if error %}
+<span style="color: red">Error: {{ error }}</span><p>
+{% end %}
+
+Name: {{ puzzle.name }}<br>
+# Rows: {{ puzzle.nrows }}</br>
+# Columns: {{ puzzle.ncols }}</br>
+
+<table border="1">
+{% for row in puzzle.as_matrix() %}
+  <tr>
+  {% for letter in row %}
+    {% if letter is not None %}
+      <td>{{ letter }}</td>
+    {% else %}
+      <td>__</td>
+    {% end%}
+  {% end %}
+  </tr>
+{% end %}
+</table>
+
+<hr>
+<h3>Add Clue</h3>
+<form action="/puzzle/edit/{{ puzzle.name }}" method="POST">
+  <select name="clue" size=10 required>
+  {% for clue in clues %}
+    <option value="{{ clue.id }}">{{ clue.answer }}</option>
+  {% end %}
+  </select><br>
+  Row: <input name="row" type="text" required><br>
+  Column: <input name="col" type="text" required><br>
+  Direction:
+  <select name="direction" required>
+    <option value=0>Across</option>
+    <option value=1>Down</option>
+  </select><br>
+  {% module xsrf_form_html() %}
+  <input type="submit">
+</form>
+{% end %}

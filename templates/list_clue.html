@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<h1>List of Clues</h1>
+
+<table border="1">
+  <tr>
+    <th>Answer</th>
+    <th>Length</th>
+    <th>Clue</th>
+    <th>Edit</th>
+  <tr>
+{% for clue in clues %}
+  <tr>
+    <td>{{ clue.answer }}</td>
+    <td>{{ len(clue.answer) }}</td>
+    <td>{{ clue.clue }}</td>
+    <td><a href="/clue/edit/{{ clue.answer }}">Edit</a></td>
+  </tr>
+{% end %}
+</table>
+
+{% end %}

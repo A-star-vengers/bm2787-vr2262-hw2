@@ -179,6 +179,18 @@ class CreateClueHandler(BaseHandler):
             self.session.add(Clue(clue=clue, answer=answer))
         self.render('create_clue.html', error='Clue created')
 
+
+class ListClueHandler(BaseHandler):
+    """Clue listing handler."""
+
+    def get(self):
+        """Render /clue/list."""
+        with self.session.begin():
+            clues = self.session.query(Clue).all()
+
+        self.render('list_clue.html', clues=clues)
+
+
 class CreatePuzzleHandler(BaseHandler):
     """Puzzle creation handler."""
 
@@ -196,8 +208,9 @@ class CreatePuzzleHandler(BaseHandler):
             self.session.add(puzzle)
         self.redirect('/puzzle/edit/{}'.format(puzzle.name))
 
+
 class EditPuzzleHandler(BaseHandler):
-    """Puzzle edition handler."""
+    """Puzzle editing handler."""
 
     def get(self, name):
         """Render /puzzle/edit/{name}."""
@@ -240,7 +253,7 @@ class EditPuzzleHandler(BaseHandler):
 
 
 class ListPuzzleHandler(BaseHandler):
-    """Puzzle list handler."""
+    """Puzzle listing handler."""
 
     def get(self):
         """Render /puzzle/list."""
@@ -267,6 +280,7 @@ class Application(tornado.web.Application):
             (r'/auth/login', LoginHandler),
             (r'/auth/logout', LogoutHandler),
             (r'/clue/create', CreateClueHandler),
+            (r'/clue/list', ListClueHandler),
             (r'/puzzle/create', CreatePuzzleHandler),
             (r'/puzzle/edit/([^/]+)', EditPuzzleHandler),
             (r'/puzzle/list', ListPuzzleHandler),

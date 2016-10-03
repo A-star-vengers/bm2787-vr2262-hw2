@@ -1,6 +1,7 @@
 # bm-2787-vr2262-hw2
 
-Using Python 3.5+:
+With Python 3.5+ available:
 
-1. `$ pip install -r requirements.txt`
-2. `$ ./run_local.sh`
+```
+$ ./run_local.sh
+```

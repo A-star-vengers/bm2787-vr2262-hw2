@@ -56,7 +56,7 @@ def clue_fits(puzzle, clue, row, col, direction):
         p_clue_last = p_clue_first + len(p_clue.clue.answer) - 1
         if p_clue.direction == direction:
             if ((direction and p_clue.col == col) or
-                (not direction and p_clue.row == row)):
+                    (not direction and p_clue.row == row)):
                 if words_overlap((first, last), (p_clue_first, p_clue_last)):
                     return False
 
@@ -274,13 +274,14 @@ class EditPuzzleHandler(BaseHandler):
         elif not clue_fits(puzzle, clue, row, col, direction):
             error = "Clue does not fit"
         else:
-            puzzle_clue = PuzzleClue(row=row,col=col,direction=direction)
+            puzzle_clue = PuzzleClue(row=row, col=col, direction=direction)
             puzzle_clue.clue = clue
             puzzle.clues.append(puzzle_clue)
             available_clues.remove(clue)
             self.session.flush()
 
-        self.render('edit_puzzle.html', puzzle=puzzle, clues=available_clues, error=error)
+        self.render('edit_puzzle.html', puzzle=puzzle, clues=available_clues,
+                    error=error)
 
 
 class ListPuzzleHandler(BaseHandler):

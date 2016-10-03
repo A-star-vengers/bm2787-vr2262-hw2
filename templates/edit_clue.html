@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<h1>Edit Clue</h1>
+{% if error %}
+<span style="color: red">Error: {{ error }}</span><p>
+{% end %}
+
+<form action="/clue/edit/{{ clue.answer }}" method="POST">
+  <h2>{{ clue.answer }}</h2>
+  <b>Clue:</b> {{ clue.clue }}<br>
+  <b>New Clue:</b> <input name="clue" type="text" value="{{ clue.clue }}"><br>
+  {% module xsrf_form_html() %}
+  <input type="submit">
+</form>
+{% end %}

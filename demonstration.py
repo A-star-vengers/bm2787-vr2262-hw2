@@ -180,6 +180,33 @@ class CreateClueHandler(BaseHandler):
         self.render('create_clue.html', error='Clue created')
 
 
+class EditClueHandler(BaseHandler):
+    """Clue editing handler."""
+
+    def get(self, answer):
+        """Render /clue/edit/{answer}."""
+        with self.session.begin():
+            clue = self.session.query(Clue).filter_by(answer=answer).first()
+
+        if clue is None:
+            raise tornado.web.HTTPError(404)
+
+        self.render('edit_clue.html', clue=clue, error=None)
+
+    def post(self, answer):
+        """Method for editing a clue."""
+
+        with self.session.begin():
+            clue = self.session.query(Clue).filter_by(answer=answer).first()
+
+        if clue is None:
+            raise tornado.web.HTTPError(404)
+
+        clue.clue = self.get_argument('clue')
+        self.session.flush()
+        self.render('edit_clue.html', clue=clue, error=None)
+
+
 class ListClueHandler(BaseHandler):
     """Clue listing handler."""
 
@@ -280,6 +307,7 @@ class Application(tornado.web.Application):
             (r'/auth/login', LoginHandler),
             (r'/auth/logout', LogoutHandler),
             (r'/clue/create', CreateClueHandler),
+            (r'/clue/edit/([^/]+)', EditClueHandler),
             (r'/clue/list', ListClueHandler),
             (r'/puzzle/create', CreatePuzzleHandler),
             (r'/puzzle/edit/([^/]+)', EditPuzzleHandler),

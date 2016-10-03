@@ -1,4 +1,4 @@
-# vr2262-demo
+# bm-2787-vr2262-hw2
 
 Using Python 3.5+:
 

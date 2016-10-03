@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<h1>List of Puzzles</h1>
+
+<table border="1">
+  <tr>
+    <th>Name</th>
+    <th>Size</th>
+    <th># Words</th>
+    <th>Edit</th>
+  <tr>
+{% for puzzle in puzzles %}
+  <tr>
+    <td>{{ puzzle.name }}</td>
+    <td>{{ puzzle.nrows }}x{{ puzzle.ncols }}</td>
+    <td>{{ len(puzzle.clues) }}</td>
+    <td><a href="/puzzle/edit/{{ puzzle.name }}">Edit</a></td>
+  </tr>
+{% end %}
+</table>
+
+{% end %}

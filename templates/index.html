@@ -3,7 +3,10 @@
 {% block body %}
   {% if current_user %}
     You have logged in<br>
+    <h3>Clues</h3>
     <a href="/clue/create">Create Clue</a></br>
+    <h3>Puzzles</hr>
+    <a href="/puzzle/list">List Puzzles</a></br>
     <a href="/puzzle/create">Create Puzzle</a></br>
   {% else %}
     You have not logged in

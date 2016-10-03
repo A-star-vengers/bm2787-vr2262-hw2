@@ -239,6 +239,17 @@ class EditPuzzleHandler(BaseHandler):
         self.render('edit_puzzle.html', puzzle=puzzle, clues=available_clues, error=error)
 
 
+class ListPuzzleHandler(BaseHandler):
+    """Puzzle list handler."""
+
+    def get(self):
+        """Render /puzzle/list."""
+        with self.session.begin():
+            puzzles = self.session.query(Puzzle).all()
+
+        self.render('list_puzzle.html', puzzles=puzzles)
+
+
 class Application(tornado.web.Application):
     """The demo application."""
 
@@ -258,6 +269,7 @@ class Application(tornado.web.Application):
             (r'/clue/create', CreateClueHandler),
             (r'/puzzle/create', CreatePuzzleHandler),
             (r'/puzzle/edit/([^/]+)', EditPuzzleHandler),
+            (r'/puzzle/list', ListPuzzleHandler),
         ]
         settings = {
             'template_path': path('templates'),

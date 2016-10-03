@@ -38,6 +38,7 @@ class User(Base):
     username = sa.Column(sa.Text, nullable=False, unique=True)
     password_hash = sa.Column(pg.BYTEA, nullable=False)
 
+
 class Puzzle(Base):
     """This model represents a crossword puzzle"""
     __tablename__ = "puzzle"
@@ -52,17 +53,18 @@ class Puzzle(Base):
         """ Return the puzzle as a matrix of letters."""
         matrix = [[None for i in range(self.ncols)] for j in range(self.nrows)]
         for clue in self.clues:
-            if clue.direction: # Down
+            if clue.direction:  # Down
                 row = clue.row
                 for letter in clue.clue.answer:
                     matrix[row][clue.col] = letter
                     row += 1
-            else: # Across
+            else:  # Across
                 col = clue.col
                 for letter in clue.clue.answer:
                     matrix[clue.row][col] = letter
                     col += 1
         return matrix
+
 
 class Clue(Base):
     """This model represents a clue/answer pair"""
@@ -71,6 +73,7 @@ class Clue(Base):
         pg.UUID, primary_key=True, server_default=func.uuid_generate_v4())
     answer = sa.Column(sa.Text, nullable=False, unique=True)
     clue = sa.Column(sa.Text, nullable=False)
+
 
 class PuzzleClue(Base):
     """This model represents clues that belongs to a puzzle"""
@@ -83,4 +86,3 @@ class PuzzleClue(Base):
     col = sa.Column(sa.Integer, nullable=False)
     direction = sa.Column(sa.Boolean, nullable=False)
     clue = sa.orm.relationship("Clue")
-

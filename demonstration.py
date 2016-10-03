@@ -30,19 +30,21 @@ path.__doc__ = 'Get the full path relative to the directory of this file.'
 from_thread = partial(get_event_loop().run_in_executor, None)
 from_thread.__doc__ = 'Run a function in another thread.'
 
+
 def words_overlap(word1, word2):
     """Determines if two words overlap."""
     first1, last1 = word1
     first2, last2 = word2
 
     return ((first1 >= first2 and first1 <= last2) or
-           (last1 >= first2 and last1 <= last2))
+            (last1 >= first2 and last1 <= last2))
+
 
 def clue_fits(puzzle, clue, row, col, direction):
     """Determines if a clue fits inside a puzzle."""
     line_len = puzzle.nrows if direction else puzzle.ncols
     first = row if direction else col
-    last = first + len(clue.answer) -1
+    last = first + len(clue.answer) - 1
 
     # Check if it fits inside puzzle
     if last >= line_len:
@@ -53,8 +55,9 @@ def clue_fits(puzzle, clue, row, col, direction):
         p_clue_first = p_clue.row if p_clue.direction else p_clue.col
         p_clue_last = p_clue_first + len(p_clue.clue.answer) - 1
         if p_clue.direction == direction:
-            if (direction and p_clue.col == col) or (not direction and p_clue.row == row):
-                if words_overlap((first,last),(p_clue_first,p_clue_last)):
+            if ((direction and p_clue.col == col) or
+                (not direction and p_clue.row == row)):
+                if words_overlap((first, last), (p_clue_first, p_clue_last)):
                     return False
 
     # Check if letters in the word match the other words already in the puzzle
@@ -249,7 +252,8 @@ class EditPuzzleHandler(BaseHandler):
 
         used_clues = [c.clue for c in puzzle.clues]
         available_clues = [c for c in all_clues if c not in used_clues]
-        self.render('edit_puzzle.html', puzzle=puzzle, clues=available_clues, error=None)
+        self.render('edit_puzzle.html', puzzle=puzzle, clues=available_clues,
+                    error=None)
 
     def post(self, name):
         """Method for editing a puzzle."""
